@@ -1,0 +1,14 @@
+ja:
+  activerecord:
+    molers:
+      user: ユーザー
+    attributes:
+      user:
+        name: 名前
+        age: 年齢
+      list:
+        user: ユーザー
+        image: 画像
+        title: タイトル
+        caption: 説明
+

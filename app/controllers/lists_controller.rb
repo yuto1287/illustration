@@ -15,9 +15,17 @@ class ListsController < ApplicationController
   end
 
   def show
+    @lists = List.all
+    @list = List.find(params[:id])
   end
 
   def edit
+  end
+
+  def destroy
+    list = List.find(params[:id])
+    list.destroy
+    redirect_to lists_path
   end
 
   private

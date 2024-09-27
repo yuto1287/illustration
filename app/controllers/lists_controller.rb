@@ -6,8 +6,11 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     @list.user_id = current_user.id
-    @list.save
-    redirect_to lists_path
+    if @list.save
+      redirect_to lists_path
+    else
+      render :new
+    end
   end
 
   def index
@@ -15,15 +18,27 @@ class ListsController < ApplicationController
   end
 
   def show
-    @lists = List.all
     @list = List.find(params[:id])
   end
 
   def edit
+    @list = List.find(params[:id])
+    unless @list.user.id == current_user.id
+      rdirect_to lists_path
+    end
+  end
+
+  def update
+    @list = List.find(params[:id])
+    if @list.update(list_params)
+      redirect_to list_path(@list.id)
+    else
+      render :edit
+    end
   end
 
   def destroy
-    list = List.find(params[:id])
+    list = List.find(oarams[:id])
     list.destroy
     redirect_to lists_path
   end

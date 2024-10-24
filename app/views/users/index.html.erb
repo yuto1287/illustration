@@ -1,0 +1,10 @@
+<% if @users.any? %>
+    <% @users.each do |user| %>
+        <div class=" d-flex justify-content-center">
+            <%= image_tag user.get_profile_image(100,100) %>
+            <%= link_to user.name %>
+        </div>
+    <% end %>
+<% else %>
+    <p class="d-flex justify-content-center mt-5">該当するレコードはありません。</p>
+<% end %>

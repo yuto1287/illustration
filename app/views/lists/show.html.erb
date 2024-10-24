@@ -23,6 +23,19 @@
             <%= link_to "削除", list_path(@list.id), method: :delete, class: "btn btn-sm btn-danger" %>
           </span>
         <% end %>
+        <div>
+          <p>コメント件数: <%= @list.list_comments.count %></p>
+          <% @list.list_comments.each do |list_comment| %>
+            <%= list_comment.user.name %>
+            <%= list_comment.created_at.strftime('%Y/%m/%d') %><%= list_comment.comment %>
+          <% end %>
+        </div>
+        <div>
+          <%= form_with model: [@list, @list_comment] do |f| %>
+            <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+            <%= f.submit "送信する" %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :profile_image, presence: true, on: :update
 
   has_many :lists, dependent: :destroy
+  has_many :list_comments, dependent: :destroy
 
   has_one_attached :profile_image
 
@@ -17,4 +18,17 @@ class User < ApplicationRecord
     end
     profile_image.variant(resize: "#{width}x#{height}^", gravity: :center, crop: "#{width}x#{height}+0+0").processed
   end
+
+  def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content)
+    elsif method == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backword'
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+    end
+  end
+
 end

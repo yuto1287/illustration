@@ -14,11 +14,12 @@ class ListsController < ApplicationController
   end
 
   def index
-    @lists = List.all
+    @lists = List.all.order(created_at: :desc)
   end
 
   def show
     @list = List.find(params[:id])
+    @list_comment = ListComment.new
   end
 
   def edit
@@ -38,7 +39,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    list = List.find(oarams[:id])
+    list = List.find(params[:id])
     list.destroy
     redirect_to lists_path
   end

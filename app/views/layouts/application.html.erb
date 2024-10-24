@@ -17,6 +17,9 @@
     </header>
     <div class="container">
       <%= render "layouts/flash_messages" %>
+        <div class="d-flex justify-content-center mb-2">
+          <%= render 'searches/form' %>
+        </div>
       <%= yield %>
     </div>
   </body>

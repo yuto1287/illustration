@@ -1,0 +1,6 @@
+<% lists.each do |list| %>
+  <%= link_to(list.user) do %>
+    <%= image_tag list.user.getprofile_image(100,100) %>
+  <% end %>
+  <%= link_to list.title,list, class: "list_#{list.id}" %>
+<% end %>

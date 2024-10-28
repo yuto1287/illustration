@@ -1,4 +1,4 @@
-class ListCommentsController < ApplicationController
+class Public::ListCommentsController < ApplicationController
 
   def create
     list = List.find(params[:list_id])

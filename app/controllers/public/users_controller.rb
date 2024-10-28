@@ -1,5 +1,5 @@
-class UsersController < ApplicationController
-  
+class Public::UsersController < ApplicationController
+
   def show
     @user = User.find(params[:id])
     @lists = @user.lists
@@ -17,6 +17,15 @@ class UsersController < ApplicationController
       render :edit
     end
   end
+  
+  def destroy
+    @user = User.find(params[:id])
+    if @user.destroy(user_params)
+      redirect_to user_path(params[:id])
+    else
+      render edit
+    end 
+  end 
 
   private
 

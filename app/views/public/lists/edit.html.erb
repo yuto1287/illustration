@@ -1,0 +1,21 @@
+<h1>編集画面</h1>
+
+<%= form_with model: @list do |f| %>
+<%= render 'layouts/error_messages', resource: @list %>
+  <div class="form-group">
+    <label for="inputTitle">Title</label><br>
+    <%= f.text_field :title, autofocus: true, id:"inputTitle", placeholder:"タイトル" %>
+  </div>
+  <div class="form-group">
+    <label for="inputImage">Image</label><br>
+    <%= f.file_field :image, placeholder: "イラスト", accept: "image/*" %>
+  </div>
+  <div class="form-group">
+    <label for="inputCaption">Caption</label><br>
+    <%= f.text_area :caption, id:"inputCaption" %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "変更を保存" %>
+  </div>
+<% end %>
+

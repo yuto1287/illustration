@@ -26,6 +26,7 @@ class Public::UsersController < ApplicationController
       render edit
     end 
   end 
+  
 
   private
 

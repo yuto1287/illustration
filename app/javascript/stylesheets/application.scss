@@ -1,2 +1,7 @@
 @use "~bootstrap/scss/bootstrap";
 
+
+.list_window {
+    overflow-y: scroll;
+    max-height: 200px;
+}

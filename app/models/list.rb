@@ -1,6 +1,7 @@
 class List < ApplicationRecord
   belongs_to :user
   has_many :list_comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   has_one_attached :image
 
@@ -16,7 +17,7 @@ class List < ApplicationRecord
   validates :caption, presence: true
   validates :image, presence: true
 
-   def self.search_for(content, method)
+  def self.search_for(content, method)
     if method == 'perfect'
       List.where(title: content)
     elsif method == 'forward'
@@ -27,4 +28,9 @@ class List < ApplicationRecord
       List.where('title LIKE ?', '%' + content + '%')
     end
   end
+
+  def favorited_by?(user)
+    favorites.exists?(user_id: user.id)
+  end
+
 end

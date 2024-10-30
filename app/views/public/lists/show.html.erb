@@ -7,16 +7,21 @@
       </div>
       <div class="col-9">
         <p class="card-title">
-          タイトル: <%= @list.title %>
+          タイトル
+          <div class="mt-1"><%= @list.title %></div>
         </p>
-        <p class="card-caption">
-          説明: <%= @list.caption %>
-        </p>
+        <div class="card-caption">
+          説明
+          <div class"form-control mt-1"><%= @list.caption %></div>
+        </div>
         <%= link_to user_path(@list.user) do %>
           <i class="fa-solid fa-user"></i>
           <%= @list.user.name %>
         <% end %>
         <%= @list.created_at.strftime('%Y/%m/%d') %>
+        <div>
+          <%= render "favorites", list: @list %>
+        </div>
         <% if @list.user == current_user %>
           <span>
             <%= link_to "編集", edit_list_path(@list.id), class: "btn btn-sm btn-success" %>
@@ -27,8 +32,9 @@
           <p>コメント件数: <%= @list.list_comments.count %></p>
           <div class="list_window">
             <% @list.list_comments.each do |list_comment| %>
-              <%= list_comment.user.name %>
-              <%= list_comment.created_at.strftime('%Y/%m/%d') %><%= list_comment.comment %><hr>
+              <%= list_comment.user.name %>・
+              <%= time_ago_in_words(list_comment.created_at) %>前
+              <%= list_comment.comment %><hr>
             <% end %>
           </div>
         </div>

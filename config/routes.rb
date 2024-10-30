@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     root to: 'lists#index'
 
     resources :lists, only: [:new, :create, :index, :show, :edit, :destroy, :update] do
+      resource :favorite, only: [:create, :destroy]
       resources :list_comments, only: [:create]
     end
     resources :users, only: [:show, :edit, :index, :update, :destroy]

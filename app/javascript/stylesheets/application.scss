@@ -10,3 +10,7 @@
     overflow-y: scroll;
     max-height: 100px;
 }
+
+  .red::before {
+    color: red!important;
+  }

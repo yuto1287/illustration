@@ -8,7 +8,7 @@
       <div class="navbar-nav">
         <% if admin_signed_in? %>
           <%= link_to "Users", admin_root_path, class: "nav-item nav-link" %>
-          <%= link_to "Comment", "#", class: "nav-item nav-link" %>
+          <%= link_to "Comment", admin_list_comments_path, class: "nav-item nav-link" %>
           <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "nav-item nav-link" %>
         <% end %>
     </div>

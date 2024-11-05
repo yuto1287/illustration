@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       end
       resource :relationships, only: [:create, :destroy]
     end
+    resources :messages, only: [:create]
+    resources :rooms, only: [:create, :show]
     get '/search', to: 'searches#search'
   end
 
@@ -23,6 +25,7 @@ Rails.application.routes.draw do
     root to: "dashboards#index"
     get 'dashboards', to: 'dashboards#index'
     resources :users, only: [:destroy]
+    resources :list_comments, only: [:index, :destroy]
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

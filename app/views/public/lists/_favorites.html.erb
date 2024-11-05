@@ -1,6 +1,6 @@
 <% if list.favorited_by?(current_user) %>
   <%= link_to list_favorite_path(list), method: :delete do %>
-    <i class="fas fa-heart" aria-hiden="true"　style="color:red;"></i>
+    <i class="fas fa-heart red" aria-hiden="true"></i>
     <%= list.favorites.count %>いいね
   <% end %>
 <% else %>

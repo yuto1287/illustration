@@ -22,9 +22,11 @@
                   <%= list.user.name %>
                 <% end %>
               </div>
-              <div class="card-favoritesmb-1">
-               <%= render "favorites", list: list %>
-              </div>
+              <% if current_user %>
+                <div class="card-favoritesmb-1">
+                 <%= render "favorites", list: list %>
+                </div>
+              <% end %>
               <div class="card-comment">
                 <p>コメント件数: <%= list.list_comments.count %></p>
               </div>

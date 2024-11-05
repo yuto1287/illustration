@@ -1,0 +1,19 @@
+<h3>コメント一覧</h3>
+<table class="table mt-3">
+  <tr>
+    <th class="col-2">名前</th>
+    <th class="col-8">コメント</th>
+    <th class="col-1"></th>
+    <th class="col-1"></th>
+  </tr>
+<% @list_comments.each do |list_comment| %>
+  <tr>
+    <td class="col-2"><%= list_comment.user.name %></td>
+    <td class="col-8"><%= list_comment.comment %></td>
+    <td class="col-1"><%= list_comment.created_at.strftime('%Y/%m/%d') %></td>
+    <td class="col-1">
+    <%= link_to '削除', admin_list_comment_path(list_comment), method: :delete, data: { confirm: '本当に削除しますか?' },class: "btn btn-sm btn-danger" %>
+    </td>
+  </tr>
+<% end %>
+</table>

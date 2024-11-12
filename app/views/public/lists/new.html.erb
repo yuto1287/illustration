@@ -1,15 +1,18 @@
 
+  <h1>投稿フォーム</h1>
+  <%= form_with model: @list do |f| %>
+    <%= render 'layouts/error_messages', resource: f.object %>
 
-<h1>投稿フォーム</h1>
-<%= form_with model: @list do |f| %>
-  <%= render 'layouts/error_messages', resource: f.object %>
+    <div class="mt-2">タイトル</div>
+    <%= f.text_field :title %>
+    <div class="mt-2">イラスト</div>
+    <%= f.file_field :image, accept: "image/*" %>
+    <div class="mt-2">説明</div>
+    <%= f.text_area :caption %>
+    <div class="mt-2">
+      <%= f.submit '投稿' %>
+    </div>
+  <% end %>
 
-  <h4>タイトル</h4>
-  <%= f.text_field :title %>
-  <h4>イラスト</h4>
-  <%= f.file_field :image, accept: "image/*" %>
-  <h4>説明</h4>
-  <%= f.text_area :caption %>
-  <%= f.submit '投稿' %>
 
-<% end %>
+

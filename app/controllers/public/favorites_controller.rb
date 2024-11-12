@@ -1,4 +1,6 @@
 class Public::FavoritesController < ApplicationController
+  #before_action :authenticate_admin!
+
   def create
     list = List.find(params[:list_id])
     favorite = current_user.favorites.new(list_id: list.id)

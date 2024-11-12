@@ -22,5 +22,10 @@
         </div>
       <%= yield %>
     </div>
+    <footer>
+      <% if current_user.try(:admin?) %>
+        <%= link_to '管理者ログイン', admin_sesstion_path %>
+      <% end %>
+    </footer>
   </body>
 </html>

@@ -2,11 +2,9 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @lists = @user.lists
-    @currentUserEntry=Entry.where(user_id: current_user.id)
-    @userEntry=Entry.where(user_id: @user.id)
-    if 
-      @user.id == current_user.id
+    @currentUserEntry = Entry.where(user_id: current_user.id)
+    @userEntry = Entry.where(user_id: @user.id)
+    if @user.id == current_user.id
     else
       @currentUserEntry.each do |cu|
         @userEntry.each do |u|
@@ -22,30 +20,40 @@ class Public::UsersController < ApplicationController
         @entry = Entry.new
       end
     end
+    @lists = @user.lists.page(params[:page])
   end
 
   def edit
     @user = User.find(params[:id])
+    unless @user.id == current_user.id
+      redirect lists_path
+    end
   end
 
   def update
     @user = User.find(params[:id])
+    unless @user.id == current_user.id
+      redirect lists_path
+    end
     if @user.update(user_params)
       redirect_to user_path(params[:id])
     else
       render :edit
     end
   end
-  
+
   def destroy
     @user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect lists_path
+    end
     if @user.destroy(user_params)
       redirect_to user_path(params[:id])
     else
       render edit
-    end 
+    end
   end
-  
+
   def followings
     user = User.find(params[:id])
 		@users = user.followings
@@ -59,6 +67,6 @@ class Public::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :profile_image)
+    params.require(:user).permit(:name, :profile_image,)
   end
 end

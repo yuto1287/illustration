@@ -1,4 +1,5 @@
 class Public::ListCommentsController < ApplicationController
+  before_action :authenticate_user!
 
   def create
     list = List.find(params[:list_id])

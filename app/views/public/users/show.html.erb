@@ -1,64 +1,71 @@
-<table class='table'>
-  <tr><%= image_tag @user.get_profile_image(100,100) %></tr>
-  <tr>
-	  <th><%= @user.name %></th>
-  </tr>
-   <tr>
-    <td>follows</td>
-    <td><%= link_to @user.followings.count, followings_user_path(@user) %></td>
-  </tr>
-  <tr>
-    <td>followers</td>
-    <td><%= link_to @user.followers.count, followers_user_path(@user) %></td>
-  </tr>
-</table>
+<div class="row">
+  <div class="col-3">
+    <table class='table'>
+      <tr><%= image_tag @user.get_profile_image(100,100) %></tr>
+      <tr>
+    	  <th><%= @user.name %></th>
+      </tr>
+       <tr>
+        <td>follows</td>
+        <td><%= link_to @user.followings.count, followings_user_path(@user) %></td>
+      </tr>
+      <tr>
+        <td>followers</td>
+        <td><%= link_to @user.followers.count, followers_user_path(@user) %></td>
+      </tr>
+    </table>
 
-<% unless @user.id == current_user.id %>
-  <% if (current_user.following? @user) && (@user.following? current_user)  %>
-  <% if @isRoom == true %>
-    <p class="user-show-room"><a href="/rooms/<%= @roomId %>" class="btn btn-primary btn-lg">チャットへ</a>
-  <% else %>
-    <%= form_for @room do |f| %>
-      <%= fields_for @entry do |e| %>
-        <%= e.hidden_field :user_id, value: @user.id %>
+    <% unless @user.id == current_user.id %>
+      <% if (current_user.following? @user) && (@user.following? current_user)  %>
+      <% if @isRoom == true %>
+        <p class="user-show-room"><a href="/rooms/<%= @roomId %>" class="btn btn-primary btn-lg">チャットへ</a>
+      <% else %>
+        <%= form_for @room do |f| %>
+          <%= fields_for @entry do |e| %>
+            <%= e.hidden_field :user_id, value: @user.id %>
+          <% end %>
+          <%= f.submit "チャットを始める", class:"btn btn-primary btn-lg user-show-chat"%>
+        <% end %>
       <% end %>
-      <%= f.submit "チャットを始める", class:"btn btn-primary btn-lg user-show-chat"%>
+      <% end %>
     <% end %>
-  <% end %>
-  <% end %>
-<% end %>
 
 
-<% if current_user != @user %>
-  <td><%= render "relationships/btn", user: @user %></td>
-<% else %>
-  <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block edit_user_#{@user.id}" do %>
-    <i class="fas fa-user-cog"></i>
-  <% end %>
-<% end %>
-
-  <% @lists.each do |list| %>
-    <div class="card w-50 mx-auto mt-4 shadow-lg">
-      <%= link_to list_path(list.id) do %>
-        <%= image_tag list.get_image, class: "card-img-top"; %>
+    <% if current_user != @user %>
+      <td><%= render "relationships/btn", user: @user %></td>
+    <% else %>
+      <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block edit_user_#{@user.id}" do %>
+        <i class="fas fa-user-cog"></i>
       <% end %>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-2">
-            <%= image_tag list.user.get_profile_image(100,100), class: "mt-3 rounded-circle"; %>
-          </div>
-          <div class="col-10">
-            <p class="card-title">
-              <%= link_to(list_path(list.id)) do %>
-                <strong><i class="far fa-flag"></i><span><%= list.title %></span></strong>
+    <% end %>
+  </div>
+  <div class="col-9">
+    <% @lists.each do |list| %>
+      <div class="card w-50 mx-auto mt-4 shadow-lg">
+        <%= link_to list_path(list.id) do %>
+          <%= image_tag list.get_image, class: "card-img-top"; %>
+        <% end %>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2 px-0">
+              <%= image_tag list.user.get_profile_image(100,100), class: "mt-3 rounded-circle"; %>
+            </div>
+            <div class="col-9 offset-1">
+              <p class="card-title">
+                <%= link_to(list_path(list.id)) do %>
+                  <strong><i class="far fa-flag"></i><span><%= list.title %></span></strong>
+                <% end %>
+              </p>
+              <%= link_to user_path(list.user) do %>
+                <i class="fa-solid fa-user"></i>
+                <%= list.user.name %>
               <% end %>
-            </p>
-            <%= link_to user_path(list.user) do %>
-              <i class="fa-solid fa-user"></i>
-              <%= list.user.name %>
-            <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+    <%= paginate @lists %>
+  </div>
+</div>
+

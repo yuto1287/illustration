@@ -1,4 +1,6 @@
 class Public::ListsController < ApplicationController
+  #before_action :authenticate_user!
+
   def new
     @list = List.new
   end
@@ -14,7 +16,7 @@ class Public::ListsController < ApplicationController
   end
 
   def index
-    @lists = List.all.order(created_at: :desc)
+    @lists = List.all.order(created_at: :desc).page(params[:page])
   end
 
   def show

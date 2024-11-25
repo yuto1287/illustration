@@ -17,12 +17,17 @@
           説明
           <div class"form-control mt-1"><%= @list.caption %></div>
         </div>
-        <%= link_to user_path(@list.user) do %>
-          <i class="fa-solid fa-user"></i>
-          <%= @list.user.name %>
-        <% end %>
+          <% if current_user %>
+            <%= link_to user_path(list.user) do %>
+              <i class="fa-solid fa-user"></i>
+              <%= @list.user.name %>
+            <% end %>
+          <% else %>
+            <i class="fa-solid fa-user"></i>
+            <%= @list.user.name %>
+          <% end %>
         <div>
-          <%= render "favorites", list: @list %>
+          <%= render "favorites", list: @list if current_user %>
         </div>
         <div class="my-3">
           <p>コメント件数: <%= @list.list_comments.count %></p>
@@ -35,9 +40,11 @@
           </div>
         </div>
         <div>
-          <%= form_with model: [@list, @list_comment] do |f| %>
-            <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
-            <%= f.submit "送信する", class: "btn btn-primary btn-block mt-3" %>
+          <% if current_user %>
+            <%= form_with model: [@list, @list_comment] do |f| %>
+              <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
+              <%= f.submit "送信する", class: "btn btn-primary btn-block mt-3" %>
+            <% end %>
           <% end %>
         </div>
         <% if @list.user == current_user %>

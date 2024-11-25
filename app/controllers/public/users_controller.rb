@@ -1,4 +1,6 @@
 class Public::UsersController < ApplicationController
+  before_action :active_for_authentication?, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def show
     @user = User.find(params[:id])
@@ -24,34 +26,15 @@ class Public::UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
-    unless @user.id == current_user.id
-      redirect lists_path
-    end
   end
 
   def update
-    @user = User.find(params[:id])
-    unless @user.id == current_user.id
-      redirect lists_path
-    end
-    if @user.update(user_params)
-      redirect_to user_path(params[:id])
-    else
-      render :edit
-    end
   end
 
   def destroy
-    @user = User.find(params[:id])
-    unless user.id == current_user.id
-      redirect lists_path
-    end
-    if @user.destroy(user_params)
-      redirect_to user_path(params[:id])
-    else
-      render edit
-    end
+    @user.update(is_deleted: true)
+    reset_session
+    redirect_to root_path
   end
 
   def followings
@@ -64,9 +47,29 @@ class Public::UsersController < ApplicationController
 		@users = user.followers
   end
 
+  def withdraw
+    @user = User.find(current_user.id)
+    @user.update(is_deleted: true)
+    reset_session
+    redirect_to root_path
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :profile_image,)
+  end
+  
+  def active_for_authentication?
+    @user = User.find_by_id(params[:id])
+    if (!current_user || current_user.is_deleted) || (@user.is_deleted)
+      redirect_to root_path
+    end
+  end
+  
+  def correct_user
+    if @user != current_user
+      redirect_to lists_path
+    end
   end
 end

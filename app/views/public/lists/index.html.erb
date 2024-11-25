@@ -17,7 +17,12 @@
                 <% end %>
               </div>
               <div class="card-user mb-1">
-                <%= link_to user_path(list.user) do %>
+                <% if current_user %>
+                  <%= link_to user_path(list.user) do %>
+                    <i class="fa-solid fa-user"></i>
+                    <%= list.user.name %>
+                  <% end %>
+                <% else %>
                   <i class="fa-solid fa-user"></i>
                   <%= list.user.name %>
                 <% end %>

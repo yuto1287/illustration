@@ -14,3 +14,57 @@
   .red::before {
     color: red!important;
   }
+
+.rightBubble {
+  position: relative;
+  display: inline-block;
+  margin-right: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #9bee8c;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.rightBubble::after {
+  content: "";
+  position: absolute;
+  top: 35%;
+  right: 0;
+  border-style: solid;
+  border-width: 0 0 16px 16px;
+  border-color: transparent transparent transparent #9bee8c;
+  translate: 100% calc(-50% - 0.4px);
+  transform: skew(0, -10deg);
+  transform-origin: left;
+}
+
+.leftBubble {
+  position: relative;
+  display: inline-block;
+  margin-left: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #9bee8c;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.leftBubble::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-style: solid;
+  border-width: 0 16px 16px 0;
+  border-color: transparent #9bee8c transparent transparent;
+  translate: -100% calc(-50% - 0.4px);
+  transform: skew(0, -10deg);
+  transform-origin: right;
+}

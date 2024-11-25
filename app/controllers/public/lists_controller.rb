@@ -1,5 +1,7 @@
 class Public::ListsController < ApplicationController
-  #before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :require_active_user_list, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def new
     @list = List.new
@@ -16,23 +18,20 @@ class Public::ListsController < ApplicationController
   end
 
   def index
-    @lists = List.all.order(created_at: :desc).page(params[:page])
+    @lists = List.active_lists.order(created_at: :desc).page(params[:page])
   end
 
   def show
-    @list = List.find(params[:id])
     @list_comment = ListComment.new
   end
 
   def edit
-    @list = List.find(params[:id])
     unless @list.user.id == current_user.id
       rdirect_to lists_path
     end
   end
 
   def update
-    @list = List.find(params[:id])
     if @list.update(list_params)
       redirect_to list_path(@list.id)
     else
@@ -41,8 +40,7 @@ class Public::ListsController < ApplicationController
   end
 
   def destroy
-    list = List.find(params[:id])
-    list.destroy
+    @list.destroy
     redirect_to lists_path
   end
 
@@ -50,5 +48,16 @@ class Public::ListsController < ApplicationController
 
   def list_params
     params.require(:list).permit(:title, :image, :caption)
+  end
+
+  def require_active_user_list
+    @list = List.active_lists.find_by_id(params[:id])
+    redirect_to lists_path unless @list
+  end
+
+  def correct_user
+    if @list.user != current_user
+      redirect_to root_path
+    end
   end
 end

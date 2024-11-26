@@ -7,10 +7,10 @@
         <% end %>
         <div class="card-body">
           <div class="row">
-            <div class="col-3">
+            <div class="col-md-3 text-center d-none d-md-block">
               <%= image_tag list.user.get_profile_image(100,100), class: "mt-3 rounded-circle img-fluid" %>
             </div>
-            <div class="col-9">
+            <div class="col-md-9">
               <div class="card-title">
                 <%= link_to(list_path(list.id)) do %>
                   <strong><i class="far fa-flag"></i><span><%= list.title %></span></strong>

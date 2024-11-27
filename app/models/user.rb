@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   scope :active_users, -> { where(is_deleted: false) }
   scope :deleted_users, -> { where(is_deleted: true) }
-  
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :name, presence: true
@@ -13,10 +13,16 @@ class User < ApplicationRecord
   has_many :list_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
-  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :followed_id, dependent: :destroy
-  has_many :followers, through: :reverse_of_relationships, source: :follower
+  #has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :followed_id, dependent: :destroy
+  #has_many :active_users.followers, through: :reverse_of_relationships, source: :follower
+  #has_many :relationships, foreign_key: :follower_id, dependent: :destroy
+  #has_many :active_users.followings, through: :relationships, source: :followed
+
   has_many :relationships, foreign_key: :follower_id, dependent: :destroy
-  has_many :followings, through: :relationships, source: :followed
+  has_many :followings, -> { where(is_deleted: false) }, through: :relationships, source: :followed
+
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :followed_id, dependent: :destroy
+  has_many :followers, -> { where(is_deleted: false) }, through: :reverse_of_relationships, source: :follower
 
   has_many :messages, dependent: :destroy
   has_many :entries, dependent: :destroy
@@ -33,13 +39,13 @@ class User < ApplicationRecord
 
   def self.search_for(content, method)
     if method == 'perfect'
-      User.where(name: content)
+      User.active_users.where(name: content)
     elsif method == 'forward'
-      User.where('name LIKE ?', content + '%')
+      User.active_users.where('name LIKE ?', content + '%')
     elsif method == 'backword'
-      User.where('name LIKE ?', '%' + content)
+      User.active_users.where('name LIKE ?', '%' + content)
     else
-      User.where('name LIKE ?', '%' + content + '%')
+      User.active_users.where('name LIKE ?', '%' + content + '%')
     end
   end
 

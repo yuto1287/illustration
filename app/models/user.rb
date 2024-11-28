@@ -13,16 +13,10 @@ class User < ApplicationRecord
   has_many :list_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
-  #has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :followed_id, dependent: :destroy
-  #has_many :active_users.followers, through: :reverse_of_relationships, source: :follower
-  #has_many :relationships, foreign_key: :follower_id, dependent: :destroy
-  #has_many :active_users.followings, through: :relationships, source: :followed
-
-  has_many :relationships, foreign_key: :follower_id, dependent: :destroy
-  has_many :followings, -> { where(is_deleted: false) }, through: :relationships, source: :followed
-
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :followed_id, dependent: :destroy
-  has_many :followers, -> { where(is_deleted: false) }, through: :reverse_of_relationships, source: :follower
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+  has_many :relationships, foreign_key: :follower_id, dependent: :destroy
+  has_many :followings, through: :relationships, source: :followed
 
   has_many :messages, dependent: :destroy
   has_many :entries, dependent: :destroy

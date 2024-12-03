@@ -10,7 +10,7 @@ class Public::FavoritesController < ApplicationController
 
   def destroy
     list = List.find(params[:list_id])
-    favorite = current_user.favorites.find_by(list_id: list.id)
+    favorite = current_user.favorites.find_by(list_id: list.id).page(params[:page])
     favorite.destroy
     redirect_to request.referer
   end

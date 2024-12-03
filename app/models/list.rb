@@ -21,13 +21,13 @@ class List < ApplicationRecord
 
   def self.search_for(content, method)
     if method == 'perfect'
-      List.where(title: content)
+      List.active_lists.where(title: content)
     elsif method == 'forward'
-      List.where('title LIKE ?', content + '%')
+      List.active_lists.where('title LIKE ?', content + '%')
     elsif method == 'backword'
-      List.where('title LIKE ?', '%' + content)
+      List.active_lists.where('title LIKE ?', '%' + content)
     else
-      List.where('title LIKE ?', '%' + content + '%')
+      List.active_lists.where('title LIKE ?', '%' + content + '%')
     end
   end
 

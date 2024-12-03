@@ -16,7 +16,7 @@
           </div>
           <div class="card-caption">
             説明
-            <div class"form-control mt-1"><%= @list.caption %></div>
+            <div class="mt-1"><%= simple_format(@list.caption, sanitize: true) %></div>
           </div>
           <% if current_user %>
             <%= link_to user_path(@list.user) do %>

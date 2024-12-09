@@ -37,6 +37,8 @@
               <%= list_comment.user.name %>・
               <%= time_ago_in_words(list_comment.created_at) %>前
               <%= list_comment.comment %><hr>
+                <% if list_comment.user == current_user %>
+                  <%= link_to "削除", 
             <% end %>
           </div>
         </div>

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
     resources :lists, only: [:new, :create, :index, :show, :edit, :destroy, :update] do
       resource :favorite, only: [:create, :destroy]
-      resources :list_comments, only: [:create]
+      resources :list_comments, only: [:create, :destroy]
     end
     resources :users, only: [:show, :edit, :index, :update, :destroy, :check, :withdraw] do
       member do

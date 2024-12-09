@@ -1,5 +1,5 @@
 class Public::ListCommentsController < ApplicationController
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
 
   def create
     list = List.find(params[:list_id])
@@ -8,6 +8,10 @@ class Public::ListCommentsController < ApplicationController
     comment.save
     redirect_to list_path(list)
   end
+  
+  def destroy
+  end
+    
 
   private
 

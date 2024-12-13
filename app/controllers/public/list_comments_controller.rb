@@ -8,10 +8,12 @@ class Public::ListCommentsController < ApplicationController
     comment.save
     redirect_to list_path(list)
   end
-  
+
   def destroy
+    @list_comments.destroy
+    render :'public/lists/show'
   end
-    
+
 
   private
 

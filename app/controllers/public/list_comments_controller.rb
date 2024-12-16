@@ -10,8 +10,9 @@ class Public::ListCommentsController < ApplicationController
   end
 
   def destroy
-    @list_comments.destroy
-    render :'public/lists/show'
+    @list_comment = ListComment.find(params[:list_id])
+    @list_comment.destroy
+    redirect_to request.referer
   end
 
 
